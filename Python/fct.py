@@ -16,15 +16,14 @@ def standardisation(df):
     """
     Standardize dataframe variables
     """
-    col_binary = ["is_canceled", "is_repeated_guest"]
+    # ne pas sélectionner tt les variables binaires
+
+
+    exclude_columns = ["is_canceled", "is_repeated_guest"]
+    columns_to_scale = df.select_dtypes(include=['int64', 'float64']).columns.difference(exclude_columns)
 
     scaler = StandardScaler()
-
-    df_quant = df.select_dtypes(include=[np.number])
-    df_quant = df_quant.drop(col_binary, axis=1)
-    df_quant = pd.DataFrame(scaler.fit_transform(df_quant), columns=df_quant.columns)
-    df = df.drop(df_quant.columns, axis=1)
-    df = pd.concat([df, df_quant], axis=1)
-    print(df)
+    df[columns_to_scale] = scaler.fit_transform(df[columns_to_scale])
+    df
 
     return df
