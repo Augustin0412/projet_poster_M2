@@ -169,3 +169,4 @@ dmypy.json
 .eslintcache*
 
 .DS_Store
+.metals/metals.mv.db
