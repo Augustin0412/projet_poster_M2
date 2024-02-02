@@ -16,10 +16,12 @@ def standardisation(df):
     """
     Standardize dataframe variables
     """
-    # ne pas sélectionner tt les variables binaires
+    # ne pas sélectionner tt les variables binaires car pas de standardisation des variables binaires
+    exclude_columns = []
+    for col in df.columns:
+        if len(df[col].unique()) == 2:
+            exclude_columns.append(col)
 
-
-    exclude_columns = ["is_canceled", "is_repeated_guest"]
     columns_to_scale = df.select_dtypes(include=['int64', 'float64']).columns.difference(exclude_columns)
 
     scaler = StandardScaler()
